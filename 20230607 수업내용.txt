@@ -1,0 +1,63 @@
+제약조건 수정및 삭제
+
+--제약조건 추가하기
+ALTER TABLE EMP10
+ADD CONSTRAINT EMP10_EMPNO_PK PRIMARY KEY(EMPNO);
+--  제약조건    제약조건 명      제약조건    컬럼명
+
+--외래키 추가
+ALTER TABLE EMP10
+ADD CONSTRAINT EMP10_DEPTNO_FK
+FOREIGN KEY(DEPTNO) REFERENCES DEPT10(DEPTNO);
+--          나의 컬럼           테이블명(부모테이블의 컬럼)
+
+--NOT NULL 제약조건 추가
+ALTER TABLE DEPT10
+MODIFY DNAME CONSTRAINT DEPT10_DNAME_NN NOT NULL;
+
+
+--제약조건 조건 제거하기
+SELECT *
+FROM USER_CONSTRAINTS
+WHERE TABLE_NAME = 'EMP05'; 
+
+--기본키 삭제, 기본키는 특별하다, 테이블마다 하나만 있으니까
+ALTER TABLE EMP05
+DROP PRIMARY KEY;
+
+--테이블마다 여러개가 있는 제약조건은 제약조건명을 기입해서 없애야된다.
+ALTER TABLE EMP05
+DROP CONSTRAINT EMP05_JOB_UK;
+
+
+--외래키 같은 제약조건들을 강제로 무시하고 객체들을 지우는 SQL문
+CASCADE
+DROP TABLE DEPT10 CASCADE CONSTRAINTS;
+
+DROP TABLE EMP10;
+
+
+
+CROSS JOIN(전체 조인)
+2개 이상의 테이블이 조인될 때
+WHERE 절에 의해 공통되는 컬럼에 의한 결합이 발생하지 않는 경우를 의미한다.
+이 처럼 SQL문이 수행되면 테이블 전체 행의 전체 컬럼이 조인된다.
+
+비동등 조인(NON-EQUI JOIN)
+조인 조건의 특정 범위 내에 있는지를 조사하는 WHERE절이다.
+일반적으로 비교연산자를 사용한다.
+
+SELF JOIN
+조인은 두 개 이상의 서로 다른 테이블을 연결하기도 하지만
+하나의 테이블 내에서 조인을 해야하지만
+자료를 얻을 수 있는 경우에는 자기자신의 테이블에 조인을 맺는 경우가 있다.
+SELF 조인은 자기 자신과 조인을 맺는 것을 말한다.
+
+@외부조인(OUTER JOIN)
+
+아우터 조인은 2개 이상의 테이블이 조인될 때 어느 한쪽의 테이블에는
+해당하는 데이터가 존재하는데 다른 쪽 테이블에는 데이터가 존재하지 않는 경우
+그 데이터는 출력되지 않는 문제를 해결하기 위해 사용하는 조인기법이다.
+
+JOIN조건에서도 동일한 값이 없는 행도 반환할 때 사용할 수 있다.
+NULL인 행들을 결과 데이터에 포함할 수 있는 JOIN문이다.
